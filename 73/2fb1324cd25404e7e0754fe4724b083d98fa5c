@@ -1,0 +1,23 @@
+.gitignore
+  712bc465c7480789 1-4
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.4",
+  "base_commit_sha": "732fb1324cd25404e7e0754fe4724b083d98fa5c",
+  "prompts": {
+    "712bc465c7480789": {
+      "agent_id": {
+        "tool": "github-copilot",
+        "id": "0a5b6644-fc9d-4621-8bf4-f56cc0e1369b",
+        "model": "unknown"
+      },
+      "human_author": "Devendra Pratap Singh",
+      "messages": [],
+      "total_additions": 4,
+      "total_deletions": 0,
+      "accepted_lines": 4,
+      "overriden_lines": 0
+    }
+  }
+}
