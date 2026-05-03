@@ -1,0 +1,48 @@
+{
+  "name": "@mesahub/client",
+  "version": "0.5.1",
+  "private": false,
+  "type": "module",
+  "description": "TypeScript SDK for mesahub (Node.js, browser, CLI)",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc --project tsconfig.json",
+    "prepublishOnly": "pnpm build",
+    "dev": "tsc --project tsconfig.json --watch",
+    "test": "vitest",
+    "test:coverage": "vitest --coverage",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint src/"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "dependencies": {
+    "@pingpong-js/fetch": "^1.0.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.6",
+    "typescript": "^6.0.2",
+    "vitest": "^1.1.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/0xdps/mesahub-package.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
