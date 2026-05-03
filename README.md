@@ -1,6 +1,6 @@
 # @mesahub/client
 
-TypeScript SDK for mesahub. Access your SQLite databases from Node.js, browsers, or CLI tools with raw SQL or a high-level table API.
+TypeScript SDK for MesaHub. Access your SQLite databases from Node.js, browsers, or CLI tools with raw SQL or a high-level table API.
 
 ## Installation
 
@@ -12,7 +12,7 @@ pnpm add @mesahub/client
 
 ## Connecting
 
-There are two ways to connect to a mesahub instance.
+There are two ways to connect to a MesaHub instance.
 
 ### Method 1 — Connection string (recommended)
 
