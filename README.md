@@ -1,30 +1,6 @@
 # @mesahub/client
 
-TypeScript SDK for sqlite-hub. Access your SQLite databases from Node.js, browsers, or CLI tools with raw SQL or a high-level table API.
-
-## Getting Started with Mesahub
-
-[Mesahub](https://mesahub.app) is the hosted version of sqlite-hub — no setup required.
-
-1. **Sign up** at [mesahub.app](https://mesahub.app) and create a database from the dashboard.
-2. **Generate an API key** under **Settings → API Keys**. It will look like `shs_...` and is shown only once.
-3. **Find your database reference** — the slug shown on the database page (e.g. `my-app-db`).
-4. **Install the SDK** and connect:
-
-```typescript
-import { MesahubClient } from '@mesahub/client';
-
-const client = new MesahubClient({
-  apiKey: 'shs_your_api_key',  // from Settings → API Keys
-  apiUrl: 'https://api.mesahub.app',
-});
-
-const db = client.db('my-app-db'); // your database slug from the dashboard
-```
-
-> **Self-hosting?** Replace `apiUrl` with your own template service URL (e.g. `https://api.yourdomain.com`).
-
----
+TypeScript SDK for mesahub. Access your SQLite databases from Node.js, browsers, or CLI tools with raw SQL or a high-level table API.
 
 ## Installation
 
@@ -34,15 +10,57 @@ npm install @mesahub/client
 pnpm add @mesahub/client
 ```
 
-## Quick Start
+## Connecting
+
+There are two ways to connect to a mesahub instance.
+
+### Method 1 — Connection string (recommended)
+
+Store the connection string in an environment variable and parse it at startup:
+
+```typescript
+import { MesahubClient, parseMesahubUrl } from '@mesahub/client';
+
+// MESAHUB_URL=mh://shs_your_api_key@your-core.railway.app/my-app-db
+const { apiUrl, apiKey, dbName } = parseMesahubUrl(process.env.MESAHUB_URL!);
+
+const client = new MesahubClient({ apiUrl, apiKey });
+const db = client.db(dbName);
+```
+
+Connection string format: `mh://apikey@host[:port]/dbname`
+
+```
+# Hosted / remote  →  HTTPS, /v1/ routes
+mh://shs_abc123@my-core.railway.app/my-app-db
+
+# Local / Docker   →  HTTP, /api/ routes (detected automatically)
+mh://shs_abc123@localhost:3000/my-app-db
+mh://shs_abc123@core-service/my-app-db
+```
+
+### Method 2 — Explicit config
 
 ```typescript
 import { MesahubClient } from '@mesahub/client';
 
 const client = new MesahubClient({
   apiKey: 'shs_your_api_key',        // from mesahub.app → Settings → API Keys
-  apiUrl: 'https://api.mesahub.app', // or your self-hosted data-plane URL
+  apiUrl: 'https://api.mesahub.app', // or your self-hosted core URL
 });
+
+const db = client.db('my-app-db'); // your database slug from the dashboard
+```
+
+---
+
+## Quick Start
+
+```typescript
+import { MesahubClient, parseMesahubUrl } from '@mesahub/client';
+
+const { apiUrl, apiKey, dbName } = parseMesahubUrl(process.env.MESAHUB_URL!);
+const client = new MesahubClient({ apiUrl, apiKey });
 
 // --- High-level table API ---
 interface User {
@@ -52,7 +70,7 @@ interface User {
   active: number;
 }
 
-const db    = client.db('my-app-db'); // your database slug from the mesahub dashboard
+const db    = client.db(dbName);
 const users = db.table<User>('users');
 
 const all    = await users.find({ where: { active: 1 }, limit: 20 });
@@ -87,14 +105,19 @@ await db.exec('CREATE TABLE IF NOT EXISTS logs (msg TEXT, created_at TEXT)');
 ### Setup
 
 ```typescript
-import { MesahubClient } from '@mesahub/client';
+import { MesahubClient, parseMesahubUrl } from '@mesahub/client';
 
-const client = new MesahubClient({
+// Via connection string (recommended)
+const { apiUrl, apiKey, dbName } = parseMesahubUrl(process.env.MESAHUB_URL!);
+const client = new MesahubClient({ apiUrl, apiKey });
+const db = client.db(dbName);
+
+// Or explicitly
+const client2 = new MesahubClient({
   apiKey: 'shs_...', // API key from mesahub.app → Settings → API Keys
   apiUrl: 'https://api.mesahub.app',
 });
-
-const db = client.db('my-app-db'); // database slug from the dashboard
+const db2 = client2.db('my-app-db'); // database slug from the dashboard
 ```
 
 ---
