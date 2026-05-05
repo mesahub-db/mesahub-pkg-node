@@ -1,10 +1,10 @@
 /**
  * @mesahub/client
- * TypeScript SDK for sqlite-hub
+ * TypeScript SDK for MesaHub
  */
 
 export { MesahubClient, parseMesahubUrl } from './client.js';
-export { SqliteHubError, AuthenticationError, AuthorizationError, NotFoundError, RateLimitError, ValidationError } from './errors.js';
+export { MesahubError, AuthenticationError, AuthorizationError, NotFoundError, RateLimitError, ValidationError } from './errors.js';
 export { DatabaseHandle } from './database.js';
 export { TableHandle } from './table.js';
 

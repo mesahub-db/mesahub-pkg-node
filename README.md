@@ -1,4 +1,4 @@
-# @mesahub/client
+# MesaHub Node SDK
 
 TypeScript SDK for MesaHub. Access your SQLite databases from Node.js, browsers, or CLI tools with raw SQL or a high-level table API.
 
@@ -315,11 +315,11 @@ await files.delete(record.id);
 
 ### Error Handling
 
-All API errors throw a `SqliteHubError` subclass with a `code` and `statusCode`.
+All API errors throw a `MesahubError` subclass with a `code` and `statusCode`.
 
 ```typescript
 import {
-  SqliteHubError,
+  MesahubError,
   AuthenticationError,
   AuthorizationError,
   NotFoundError,
@@ -334,7 +334,7 @@ try {
     // HTTP 429
   } else if (err instanceof AuthenticationError) {
     // HTTP 401 — bad or missing API key
-  } else if (err instanceof SqliteHubError) {
+  } else if (err instanceof MesahubError) {
     console.error(err.code, err.statusCode, err.message);
   }
 }

@@ -9,7 +9,7 @@
 
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { MesahubClient } from './client.js'
-import { SqliteHubError } from './errors.js'
+import { MesahubError } from './errors.js'
 
 // ── mock setup ────────────────────────────────────────────────────────────────
 
@@ -112,9 +112,9 @@ describe('db.query', () => {
     expect(result.columns).toEqual(['id', 'email'])
   })
 
-  it('throws SqliteHubError on server error', async () => {
+  it('throws MesahubError on server error', async () => {
     mockPost.mockResolvedValueOnce(err(500, 'DB_ERROR', 'Something went wrong'))
-    await expect(client().db(DB_REF).query('SELECT 1')).rejects.toBeInstanceOf(SqliteHubError)
+    await expect(client().db(DB_REF).query('SELECT 1')).rejects.toBeInstanceOf(MesahubError)
   })
 })
 
@@ -149,11 +149,11 @@ describe('db.exec', () => {
     )
   })
 
-  it('throws SqliteHubError on server error', async () => {
+  it('throws MesahubError on server error', async () => {
     mockPost.mockResolvedValueOnce(err(400, 'SYNTAX_ERROR', 'syntax error'))
     await expect(
       client().db(DB_REF).exec('INSER INTO t VALUES (1)'),
-    ).rejects.toBeInstanceOf(SqliteHubError)
+    ).rejects.toBeInstanceOf(MesahubError)
   })
 })
 
@@ -188,15 +188,15 @@ describe('db.files.delete', () => {
 // ─────────────────────────────────────────────────────────────────────────────
 
 describe('error handling', () => {
-  it('includes status code on SqliteHubError', async () => {
+  it('includes status code on MesahubError', async () => {
     mockPost.mockResolvedValueOnce(err(403, 'PLAN_LIMIT', 'Plan limit reached'))
     try {
       await client().db(DB_REF).query('SELECT 1')
       expect.fail('expected to throw')
     } catch (e) {
-      expect(e).toBeInstanceOf(SqliteHubError)
-      expect((e as SqliteHubError).statusCode).toBe(403)
-      expect((e as SqliteHubError).code).toBe('PLAN_LIMIT')
+      expect(e).toBeInstanceOf(MesahubError)
+      expect((e as MesahubError).statusCode).toBe(403)
+      expect((e as MesahubError).code).toBe('PLAN_LIMIT')
     }
   })
 
@@ -206,9 +206,9 @@ describe('error handling', () => {
       await client().db(DB_REF).exec('INSERT INTO t VALUES (1)')
       expect.fail('expected to throw')
     } catch (e) {
-      expect(e).toBeInstanceOf(SqliteHubError)
-      expect((e as SqliteHubError).code).toBe('UNKNOWN_ERROR')
-      expect((e as SqliteHubError).statusCode).toBe(500)
+      expect(e).toBeInstanceOf(MesahubError)
+      expect((e as MesahubError).code).toBe('UNKNOWN_ERROR')
+      expect((e as MesahubError).statusCode).toBe(500)
     }
   })
 })

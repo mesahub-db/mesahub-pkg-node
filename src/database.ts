@@ -1,5 +1,5 @@
 import type { HttpClient, StreamResponse } from '@pingpong-js/fetch';
-import { SqliteHubError } from './errors.js';
+import { MesahubError } from './errors.js';
 import type { QueryResult, ExecResult, FileRecord } from './types.js';
 import { TableHandle } from './table.js';
 
@@ -121,7 +121,7 @@ export class DatabaseHandle {
       method === 'DELETE' ? await this.http.delete<T>(path) :
                             await this.http.post<T>(path, body);
     if (res.isError()) {
-      throw SqliteHubError.fromResponse(
+      throw MesahubError.fromResponse(
         { status: res.status, statusText: res.statusText } as Response,
         res.data,
       );
@@ -154,7 +154,7 @@ class DatabaseFiles {
         ? await this.http.get<T>(path)
         : await this.http.delete<T>(path);
     if (res.isError()) {
-      throw SqliteHubError.fromResponse(
+      throw MesahubError.fromResponse(
         { status: res.status, statusText: res.statusText } as Response,
         res.data,
       );
@@ -193,7 +193,7 @@ class DatabaseFiles {
       body:   form,
     });
     if (res.isError()) {
-      throw SqliteHubError.fromResponse(
+      throw MesahubError.fromResponse(
         { status: res.status, statusText: res.statusText } as Response,
         res.data,
       );

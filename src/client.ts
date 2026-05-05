@@ -1,5 +1,5 @@
 /**
- * MesahubClient — data-plane SDK for sqlite-hub.
+ * MesahubClient — data-plane SDK for MesaHub.
  *
  * Talks directly to the Go template server (apiUrl) using a shs_ API key.
  * Uses @pingpong-js/fetch as the HTTP agent (undici in Node.js, native fetch in browsers).
@@ -20,7 +20,7 @@
 
 import pingpong from '@pingpong-js/fetch';
 import type { HttpClient, StreamResponse } from '@pingpong-js/fetch';
-import { SqliteHubError } from './errors.js';
+import { MesahubError } from './errors.js';
 import type { QueryResult, ExecResult, FileRecord } from './types.js';
 import { DatabaseHandle } from './database.js';
 
@@ -83,7 +83,7 @@ export class MesahubClient {
       method === 'DELETE' ? await this.http.delete<T>(path) :
                             await this.http.post<T>(path, body);
     if (res.isError()) {
-      throw SqliteHubError.fromResponse(
+      throw MesahubError.fromResponse(
         { status: res.status, statusText: res.statusText } as Response,
         res.data,
       );
@@ -167,7 +167,7 @@ export class MesahubClient {
           body:   form,
         });
         if (res.isError()) {
-          throw SqliteHubError.fromResponse(
+          throw MesahubError.fromResponse(
             { status: res.status, statusText: res.statusText } as Response,
             res.data,
           );
