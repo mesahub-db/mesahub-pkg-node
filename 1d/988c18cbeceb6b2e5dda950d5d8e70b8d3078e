@@ -1,0 +1,14 @@
+.github/workflows/publish.yml
+  h_7a2f4c8f0473b8 11-12
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.4",
+  "base_commit_sha": "1d988c18cbeceb6b2e5dda950d5d8e70b8d3078e",
+  "prompts": {},
+  "humans": {
+    "h_7a2f4c8f0473b8": {
+      "author": "Devendra Pratap Singh <dps.manit@gmail.com>"
+    }
+  }
+}
