@@ -1,0 +1,19 @@
+.github/workflows/publish.yml
+  s_e243abbb0dc648::t_6fb3f78a9e4992 20
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.4",
+  "base_commit_sha": "228271be741a0dad13c66f83582da2fc60db3959",
+  "prompts": {},
+  "sessions": {
+    "s_e243abbb0dc648": {
+      "agent_id": {
+        "tool": "github-copilot",
+        "id": "ba58654a-ffff-4db9-a3f6-d71887776fd3",
+        "model": "unknown"
+      },
+      "human_author": "Devendra Pratap Singh <dps.manit@gmail.com>"
+    }
+  }
+}
