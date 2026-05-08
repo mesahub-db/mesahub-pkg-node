@@ -26,11 +26,8 @@ jobs:
         with:
           node-version: 24
 
-      - name: Allow esbuild build scripts
-        run: echo 'dangerouslyAllowAllBuilds=true' >> .npmrc
-
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --ignore-scripts
 
       - name: Build
         run: pnpm build
