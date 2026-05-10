@@ -4,11 +4,22 @@
  */
 
 export { MesahubClient, parseMesahubUrl } from './client.js';
+export { MesahubManagementClient } from './management.js';
 export { MesahubError, AuthenticationError, AuthorizationError, NotFoundError, RateLimitError, ValidationError } from './errors.js';
 export { DatabaseHandle } from './database.js';
 export { TableHandle } from './table.js';
 
 export type { MesahubClientConfig, ParsedMesahubUrl } from './client.js';
+export type {
+  ManagementClientConfig,
+  DatabaseRecord,
+  BucketRecord,
+  ApiKeyRecord,
+  CreateApiKeyResult,
+  ImportResult,
+  ExportOptions,
+  ImportOptions,
+} from './management.js';
 export type {
   QueryResult,
   ExecResult,
