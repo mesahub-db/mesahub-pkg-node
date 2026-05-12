@@ -1,0 +1,19 @@
+src/database.ts
+  s_55f69f7b1db49b::t_2400e315dc6f88 57,72,87
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.4",
+  "base_commit_sha": "9d9b79a3205bcc8b51f5c9269e46af21fb8b014f",
+  "prompts": {},
+  "sessions": {
+    "s_55f69f7b1db49b": {
+      "agent_id": {
+        "tool": "github-copilot",
+        "id": "7e74285d-ec0e-435d-aa9d-b9a6318dd5d0",
+        "model": "unknown"
+      },
+      "human_author": "Devendra Pratap Singh <dps.manit@gmail.com>"
+    }
+  }
+}
