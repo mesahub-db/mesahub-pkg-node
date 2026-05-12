@@ -1,6 +1,6 @@
 {
   "name": "@mesahub/client",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": false,
   "type": "module",
   "description": "TypeScript SDK for mesahub (Node.js, browser, CLI)",
