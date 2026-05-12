@@ -54,6 +54,7 @@ export class DatabaseHandle {
   /** Execute a read-only SQL query (SELECT / WITH / PRAGMA). */
   async query(sql: string, bindings: unknown[] = []): Promise<QueryResult> {
     const raw = await this._req<any>('POST', this.QUERY, { sql, bindings });
+    if (raw == null) return { columns: [], rows: [], rowCount: 0, queryDurationMs: null };
     const columns: string[] = Array.isArray(raw.headers)
       ? raw.headers.map((h: { name: string }) => h.name)
       : (raw.columns ?? []);
@@ -68,6 +69,7 @@ export class DatabaseHandle {
   /** Execute a write SQL statement (INSERT / UPDATE / DELETE / CREATE …). */
   async exec(sql: string, bindings: unknown[] = []): Promise<ExecResult> {
     const raw = await this._req<any>('POST', this.EXEC, { sql, bindings });
+    if (raw == null) return { rowsAffected: 0, lastInsertRowid: undefined, queryDurationMs: null };
     return {
       rowsAffected:    raw.rowsAffected ?? raw.stat?.rowsAffected ?? 0,
       lastInsertRowid: raw.lastInsertRowid,
@@ -82,6 +84,7 @@ export class DatabaseHandle {
    */
   private async execRows(sql: string, bindings: unknown[] = []): Promise<QueryResult> {
     const raw = await this._req<any>('POST', this.EXEC, { sql, bindings });
+    if (raw == null) return { columns: [], rows: [], rowCount: 0, queryDurationMs: null };
     const columns: string[] = Array.isArray(raw.headers)
       ? raw.headers.map((h: { name: string }) => h.name)
       : (raw.columns ?? []);
