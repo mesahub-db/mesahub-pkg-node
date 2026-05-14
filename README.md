@@ -354,6 +354,61 @@ await client.db('my-db').query('SELECT 1');
 
 ---
 
+## Management Client
+
+`MesahubManagementClient` provides programmatic access to the same management operations available in the web dashboard — database and bucket CRUD, API key management, and import/export.
+
+It talks to the **dashboard** (control plane) using a `shs_` API key, not the data-plane.
+
+```typescript
+import { MesahubManagementClient } from '@mesahub/client';
+
+const mgmt = new MesahubManagementClient({
+  dashboardUrl: 'https://www.mesahub.app', // control-plane URL
+  apiKey:       'shs_your_api_key',
+});
+
+// Databases
+const dbs   = await mgmt.databases.list();
+const db    = await mgmt.databases.create('my-app-db', { description: 'Production' });
+const info  = await mgmt.databases.get(db.id);
+await mgmt.databases.update(db.id, { name: 'my-app-db-v2' });
+await mgmt.databases.delete(db.id);
+
+// Buckets
+const bucket = await mgmt.buckets.create('uploads');
+await mgmt.buckets.delete(bucket.id);
+
+// API keys
+const keys   = await mgmt.apiKeys.list();
+const newKey = await mgmt.apiKeys.create('ci-deploy');
+console.log(newKey.key); // shs_... — only returned on creation, never stored
+await mgmt.apiKeys.revoke(newKey.id);
+```
+
+### Import & Export
+
+```typescript
+// Export selected tables as a SQLite file
+const response = await mgmt.databases.export(db.id, {
+  tables: ['users', 'products'],
+});
+const buffer = await response.arrayBuffer();
+// → write to disk or upload to object storage
+
+// Phase 1: inspect a SQLite file for available tables
+const { tables } = await mgmt.databases.import(db.id, file) as { tables: string[] };
+
+// Phase 2: copy selected tables into the target database
+await mgmt.databases.import(db.id, file, { tables: ['users'] });
+```
+
+### Self-hosted
+
+Point `dashboardUrl` at your own deployment. Dedicated instance users should use their dashboard URL (e.g. `https://manage.mycompany.com`) — the management client always targets the control plane, not the data-plane.
+
+---
+
 ## TypeScript
 
 All types are exported from the package root:
